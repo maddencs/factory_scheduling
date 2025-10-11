@@ -9,6 +9,23 @@ services:
     ports:
       - "5432:5432"
 
+  db_test:
+    image: postgres:16.2-alpine
+    environment:
+      POSTGRES_DB: factory_db_test
+      POSTGRES_HOST: db_test
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    tmpfs:
+      - /var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 1s
+      timeout: 3s
+      retries: 10
+
   migrate:
     build: .
     depends_on:
@@ -29,6 +46,20 @@ services:
     command: ["uvicorn", "src.api.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
     ports:
       - "8000:8000"
+    volumes:
+      - .:/app
+
+  tests:
+    build: .
+    depends_on:
+      db_test:
+        condition: service_healthy
+    environment:
+      POSTGRES_DB: factory_db_test
+      POSTGRES_HOST: db_test
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    command: sh -c "alembic upgrade head && pytest -v"
     volumes:
       - .:/app
 

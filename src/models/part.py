@@ -1,3 +1,4 @@
+from datetime import timedelta
 from typing import List
 
 from sqlalchemy import Integer, String, Interval, ForeignKey
@@ -15,7 +16,7 @@ class Part(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     name: Mapped[str] = mapped_column(String(255))
-    lead_time: Mapped[Interval] = mapped_column(Interval)
+    lead_time: Mapped[timedelta] = mapped_column(Interval)
 
     bom_parts: Mapped[List["BOMParts"]] = relationship("BOMParts", back_populates="part")
     bills_of_materials: Mapped[List["BillOfMaterials"]] = relationship(

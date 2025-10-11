@@ -9,7 +9,7 @@ class Part(Base):
 
     workcenter_id: Mapped[int] = mapped_column(Integer, ForeignKey("workcenters.id"), index=True)
 
-    workcenter: Mapped["Workcenter"] = relationship("Workcenter", back_populates="parts")
+    workcenter: Mapped["Workcenter"] = relationship("Workcenter", back_populates="parts")  # noqa: F821
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     name: Mapped[str] = mapped_column(String(255))

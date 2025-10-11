@@ -2,7 +2,6 @@ from datetime import timedelta
 from unittest.mock import Mock
 
 import pytest
-from sqlalchemy import insert
 
 from src.api.graphql.resolvers.part import get_parts
 from src.models import Part, Workcenter

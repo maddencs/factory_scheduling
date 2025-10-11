@@ -1,7 +1,14 @@
+from typing import TYPE_CHECKING
+
 from sqlalchemy import Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .base import Base
+
+
+if TYPE_CHECKING:
+    from .order import Order
+    from .bom_parts import BOMParts
 
 
 class BillOfMaterials(Base):

@@ -1,6 +1,5 @@
 from sqlalchemy import PrimaryKeyConstraint, Integer, ForeignKey
-from sqlalchemy.orm import Mapped, relationship
-from sqlalchemy.testing.schema import mapped_column
+from sqlalchemy.orm import Mapped, relationship, mapped_column
 
 from .base import Base
 
@@ -16,7 +15,7 @@ class BOMParts(Base):
         ForeignKey("bill_of_materials.id"),
     )
 
-    part = relationship("Part", back_populates="bill_of_materials")
-    bill_of_materials = relationship("BillOfMaterials", back_populates="parts")
+    part = relationship("Part", back_populates="bom_parts")
+    bill_of_materials = relationship("BillOfMaterials", back_populates="bom_parts")
 
     quantity: Mapped[int] = mapped_column(Integer)

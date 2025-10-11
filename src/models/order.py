@@ -1,6 +1,5 @@
 from sqlalchemy import ForeignKey, Integer
-from sqlalchemy.orm import Mapped, relationship
-from sqlalchemy.testing.schema import mapped_column
+from sqlalchemy.orm import Mapped, relationship, mapped_column
 
 from .base import Base
 
@@ -12,4 +11,4 @@ class Order(Base):
     bill_of_materials_id: Mapped[int] = mapped_column(ForeignKey("bill_of_materials.id"))
     workcenter_id: Mapped[int] = mapped_column(ForeignKey("workcenters.id"))
 
-    bill_of_material = relationship("BillOfMaterials", back_populates="orders")
+    bill_of_materials = relationship("BillOfMaterials", back_populates="orders")

@@ -1,6 +1,6 @@
 import strawberry
 
-from .schemas.query_schema import PartQuery
+from api.graphql.schemas.part_query import PartQuery
 
 
 @strawberry.type

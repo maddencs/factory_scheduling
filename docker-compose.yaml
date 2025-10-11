@@ -1,0 +1,22 @@
+services:
+  migrate:
+    build: .
+    command: alembic upgrade head
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+
+  web:
+    build: .
+    container_name: factory_scheduling
+    env_file:
+      - .env
+    command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+
+volumes:
+  sqlite_data:

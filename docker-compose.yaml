@@ -1,6 +1,18 @@
 services:
+  db:
+    image: postgres:16.2-alpine
+    env_file:
+      - .env
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - "5432:5432"
+
   migrate:
     build: .
+    depends_on:
+      - db
     command: alembic upgrade head
     env_file:
       - .env
@@ -10,6 +22,8 @@ services:
   web:
     build: .
     container_name: factory_scheduling
+    depends_on:
+      - db
     env_file:
       - .env
     command: ["uvicorn", "src.api.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
@@ -19,4 +33,4 @@ services:
       - .:/app
 
 volumes:
-  sqlite_data:
+  postgres_data:

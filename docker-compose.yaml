@@ -26,7 +26,7 @@ services:
       timeout: 3s
       retries: 10
 
-  migrate:
+  run_migrations:
     build: .
     depends_on:
       - db

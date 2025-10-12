@@ -3,6 +3,7 @@ from .bom_parts import BOMParts
 from .order import Order
 from .part import Part
 from .workcenter import Workcenter
+from .scheduled_part import ScheduledPart
 
 __all__ = [
     "BillOfMaterials",
@@ -10,4 +11,5 @@ __all__ = [
     "Part",
     "Workcenter",
     "BOMParts",
+    "ScheduledPart",
 ]

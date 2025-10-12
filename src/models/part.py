@@ -10,6 +10,7 @@ if TYPE_CHECKING:
     from .bill_of_materials import BillOfMaterials
     from .bom_parts import BOMParts
     from .workcenter import Workcenter
+    from .scheduled_part import ScheduledPart
 
 
 class Part(Base):
@@ -30,3 +31,4 @@ class Part(Base):
         secondary="boms_parts",
         viewonly=True,
     )
+    scheduled_parts: Mapped[list["ScheduledPart"]] = relationship("ScheduledPart", back_populates="part")

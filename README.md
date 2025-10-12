@@ -24,8 +24,13 @@ To run the app:
 ```bash
 docker-compose up web db
 ```
+Then access the GraphQL playground at http://localhost:8000/graphql/
 
-Access the GraphQL playground at http://localhost:8000/graphql/
+Optionally, seed the database with some test data:
+```bash
+docker-compose run seed_demo_data
+```
+
 
 
 ## ⚙️ Tech Stack

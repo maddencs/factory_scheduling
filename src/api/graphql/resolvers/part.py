@@ -1,6 +1,5 @@
 from datetime import timedelta
 
-import strawberry
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload
 from strawberry.types import Info

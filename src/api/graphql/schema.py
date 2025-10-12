@@ -9,6 +9,7 @@ from .schemas.workcenter_query import WorkcenterQuery
 class Query(PartQuery, WorkcenterQuery):
     pass
 
+
 @strawberry.type
 class Mutation(PartMutation):
     pass

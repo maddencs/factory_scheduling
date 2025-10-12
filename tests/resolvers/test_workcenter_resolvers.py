@@ -3,7 +3,6 @@ from datetime import timedelta
 import pytest
 
 from src.api.graphql.resolvers.part import add_part, all_parts
-from src.models import Workcenter
 from tests.factories.part import part_factory
 from tests.factories.workcenter import workcenter_factory
 

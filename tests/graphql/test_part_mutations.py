@@ -12,12 +12,12 @@ async def test_part_mutation_add_part(db_session, test_client):
     mutation = f"""
         mutation {{
             addPart(
-            leadTimeSeconds: {lead_time_seconds}, 
-            name: "{part_name}", 
+            leadTimeSeconds: {lead_time_seconds},
+            name: "{part_name}",
             workcenterId: {workcenter.id}
             ) {{
-                id 
-                name 
+                id
+                name
                 leadTimeSeconds
                 workcenter {{
                         id

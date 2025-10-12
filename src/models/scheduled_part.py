@@ -1,14 +1,14 @@
 from datetime import datetime
 from typing import TYPE_CHECKING
 
-from sqlalchemy import ForeignKey, Integer, PrimaryKeyConstraint, DateTime
+from sqlalchemy import DateTime, ForeignKey, Integer
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .base import Base
 
 if TYPE_CHECKING:
-    from .part import Part
     from .order import Order
+    from .part import Part
 
 
 class ScheduledPart(Base):

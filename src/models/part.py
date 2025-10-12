@@ -9,8 +9,8 @@ from .base import Base
 if TYPE_CHECKING:
     from .bill_of_materials import BillOfMaterials
     from .bom_parts import BOMParts
-    from .workcenter import Workcenter
     from .scheduled_part import ScheduledPart
+    from .workcenter import Workcenter
 
 
 class Part(Base):

@@ -11,11 +11,8 @@ services:
 
   db_test:
     image: postgres:16.2-alpine
-    environment:
-      POSTGRES_DB: factory_db_test
-      POSTGRES_HOST: db_test
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+    env_file:
+      - .env.test
     ports:
       - "5433:5432"
     tmpfs:
@@ -54,11 +51,10 @@ services:
     depends_on:
       db_test:
         condition: service_healthy
+    env_file:
+      - .env.test
     environment:
-      POSTGRES_DB: factory_db_test
-      POSTGRES_HOST: db_test
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      - POSTGRES_HOST=db_test
     command: sh -c "alembic upgrade head && pytest -vvs --tb=long"
     volumes:
       - .:/app

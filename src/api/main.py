@@ -9,7 +9,7 @@ app = FastAPI()
 
 
 async def get_context(session=Depends(get_async_session)):
-    yield {"session": session}
+    return {"session": session}
 
 
 graphql_app = GraphQLRouter(schema, context_getter=get_context)

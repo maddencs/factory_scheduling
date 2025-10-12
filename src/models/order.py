@@ -14,6 +14,5 @@ class Order(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     bill_of_materials_id: Mapped[int] = mapped_column(ForeignKey("bill_of_materials.id"))
-    workcenter_id: Mapped[int] = mapped_column(ForeignKey("workcenters.id"))
 
     bill_of_materials: Mapped["BillOfMaterials"] = relationship("BillOfMaterials", back_populates="orders")

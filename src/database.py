@@ -18,7 +18,6 @@ engine = create_async_engine(DATABASE_ASYNC_URL, echo=False)
 AsyncSession = async_sessionmaker(engine, autoflush=False, autocommit=False, future=True)
 
 
-@asynccontextmanager
 async def get_async_session():
     async with AsyncSession() as session:
         yield session

@@ -26,4 +26,6 @@ async def add_part(
     session.add(part)
     await session.commit()
     await session.refresh(part)
-    return part
+
+    part = await session.execute(select(Part).options(selectinload(Part.workcenter)).where(Part.id == part.id))
+    return part.scalar_one()

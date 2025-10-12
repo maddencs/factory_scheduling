@@ -1,5 +1,6 @@
 import strawberry
 
+from .schemas.order_mutation import OrderMutation
 from .schemas.part_mutation import PartMutation
 from .schemas.part_query import PartQuery
 from .schemas.workcenter_query import WorkcenterQuery
@@ -11,7 +12,7 @@ class Query(PartQuery, WorkcenterQuery):
 
 
 @strawberry.type
-class Mutation(PartMutation):
+class Mutation(PartMutation, OrderMutation):
     pass
 
 

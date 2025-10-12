@@ -1,12 +1,7 @@
 import strawberry
 
+from src.api.graphql.types.workcenter import WorkcenterType
 from src.models import Part
-
-
-@strawberry.type
-class WorkcenterType:
-    id: int
-    name: str
 
 
 @strawberry.type

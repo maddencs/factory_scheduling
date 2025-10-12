@@ -9,8 +9,8 @@ from src.api.graphql.types.part import PartType, map_part_to_type
 
 @strawberry.type
 class PartMutation:
-    @strawberry.field
-    async def create_part(
+    @strawberry.mutation
+    async def add_part(
         self,
         info: Info,
         name: str,

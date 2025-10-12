@@ -2,10 +2,11 @@ import strawberry
 
 from .schemas.part_mutation import PartMutation
 from .schemas.part_query import PartQuery
+from .schemas.workcenter_query import WorkcenterQuery
 
 
 @strawberry.type
-class Query(PartQuery):
+class Query(PartQuery, WorkcenterQuery):
     pass
 
 @strawberry.type

@@ -37,14 +37,14 @@ async def test_client(db_session: AsyncSession):
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
 
         async def override_get_session():
-            yield {"session": db_session}
+            yield db_session
 
         app.dependency_overrides[get_async_session] = override_get_session
         yield client
 
 
 @pytest.fixture(scope="session")
-def event_loop():
+async def event_loop():
     policy = asyncio.get_event_loop_policy()
     loop = policy.new_event_loop()
     yield loop
@@ -52,7 +52,7 @@ def event_loop():
 
 
 @pytest_asyncio.fixture
-def mock_info(db_session: AsyncSession):
+async def mock_info(db_session: AsyncSession):
     mock_info = Mock()
     mock_info.context = {"session": db_session}
     yield mock_info

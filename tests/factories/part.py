@@ -2,7 +2,7 @@ from datetime import timedelta
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from models import Part
+from src.models import Part
 
 
 async def part_factory(

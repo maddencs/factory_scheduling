@@ -7,7 +7,6 @@ from tests.factories.workcenter import workcenter_factory
 
 @pytest.mark.asyncio
 async def test_order_service_submit_order(db_session):
-    workcenter = await workcenter_factory(name="Workcenter A", session=db_session)
     bom = await bom_factory(
         session=db_session,
         name="Widget A",

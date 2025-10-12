@@ -35,4 +35,3 @@ async def test_query_all_parts(db_session, test_client):
     """
     response = await test_client.post("/graphql", json={"query": query})
     assert response.status_code == 200
-    print(response.json())

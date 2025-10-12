@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from strawberry.fastapi import GraphQLRouter
 
 from src.database import get_async_session
+
 from .graphql.schema import schema
 
 app = FastAPI()

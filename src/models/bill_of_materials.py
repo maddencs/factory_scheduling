@@ -5,10 +5,9 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .base import Base
 
-
 if TYPE_CHECKING:
-    from .order import Order
     from .bom_parts import BOMParts
+    from .order import Order
 
 
 class BillOfMaterials(Base):

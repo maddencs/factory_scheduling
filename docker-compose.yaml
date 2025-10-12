@@ -59,7 +59,7 @@ services:
       POSTGRES_HOST: db_test
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-    command: sh -c "alembic upgrade head && pytest -v"
+    command: sh -c "alembic upgrade head && pytest -vvs --tb=long"
     volumes:
       - .:/app
 

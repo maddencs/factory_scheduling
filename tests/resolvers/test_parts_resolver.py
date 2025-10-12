@@ -8,7 +8,7 @@ from src.models import Part, Workcenter
 
 
 @pytest.mark.asyncio
-async def test_get_parts(db_session):
+async def test_resolver_get_parts(db_session):
     workcenter = Workcenter(name="Workcenter A")
     db_session.add(workcenter)
     await db_session.commit()

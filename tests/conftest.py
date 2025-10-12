@@ -1,17 +1,45 @@
+import asyncio
+
 import pytest
-from httpx import AsyncClient
+import pytest_asyncio
+from httpx import ASGITransport, AsyncClient
+from sqlalchemy import text
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
 from src.api.main import app
-from src.database import AsyncSession
+from src.database import DATABASE_ASYNC_URL
+from src.models.base import Base
 
 
-@pytest.fixture
-async def test_client():
-    async with AsyncClient(app=app, base_url="http://test") as client:
+@pytest_asyncio.fixture(scope="function")
+async def db_session():
+    test_engine = create_async_engine(DATABASE_ASYNC_URL, echo=False, future=True)
+    TestSessionLocal = async_sessionmaker(bind=test_engine, expire_on_commit=False)
+
+    async with TestSessionLocal() as session:
+        yield session
+
+        # Disable FK checks so truncation order doesn't matter
+        await session.execute(text("SET session_replication_role = replica;"))
+
+        # Truncate all tables and reset sequences
+        for table in reversed(Base.metadata.sorted_tables):
+            await session.execute(text(f'TRUNCATE TABLE "{table.name}" RESTART IDENTITY CASCADE;'))
+
+        # Re-enable FK constraints
+        await session.execute(text("SET session_replication_role = DEFAULT;"))
+        await session.commit()
+
+
+@pytest_asyncio.fixture(scope="function")
+async def test_client(db_session: AsyncSession):
+    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
         yield client
 
 
-@pytest.fixture
-async def db_session():
-    async with AsyncSession() as session:
-        yield session
+@pytest.fixture(scope="session")
+def event_loop():
+    policy = asyncio.get_event_loop_policy()
+    loop = policy.new_event_loop()
+    yield loop
+    loop.close()

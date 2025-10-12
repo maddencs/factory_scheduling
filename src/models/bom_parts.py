@@ -1,14 +1,13 @@
 from typing import TYPE_CHECKING
 
-from sqlalchemy import PrimaryKeyConstraint, Integer, ForeignKey
-from sqlalchemy.orm import Mapped, relationship, mapped_column
+from sqlalchemy import ForeignKey, Integer, PrimaryKeyConstraint
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .base import Base
 
-
 if TYPE_CHECKING:
-    from .part import Part
     from .bill_of_materials import BillOfMaterials
+    from .part import Part
 
 
 class BOMParts(Base):

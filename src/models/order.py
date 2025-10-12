@@ -1,10 +1,9 @@
 from typing import TYPE_CHECKING
 
 from sqlalchemy import ForeignKey, Integer
-from sqlalchemy.orm import Mapped, relationship, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .base import Base
-
 
 if TYPE_CHECKING:
     from .bill_of_materials import BillOfMaterials

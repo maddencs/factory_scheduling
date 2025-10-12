@@ -2,13 +2,13 @@ from datetime import timedelta
 
 import pytest
 
-from src.api.graphql.resolvers.part import add_part, all_parts
+from src.services.part import add_part, all_parts
 from tests.factories.part import part_factory
 from tests.factories.workcenter import workcenter_factory
 
 
 @pytest.mark.asyncio
-async def test_resolver_get_parts(db_session, mock_info):
+async def test_service_part_all_parts(db_session):
     workcenter = await workcenter_factory(name="Workcenter A", session=db_session)
 
     part = await part_factory(
@@ -18,7 +18,7 @@ async def test_resolver_get_parts(db_session, mock_info):
         workcenter_id=workcenter.id,
     )
 
-    parts = await all_parts(mock_info)
+    parts = await all_parts(db_session)
 
     assert len(parts) == 1
     assert parts[0].id == part.id
@@ -29,7 +29,7 @@ async def test_resolver_get_parts(db_session, mock_info):
 
 
 @pytest.mark.asyncio
-async def test_resolver_add_part(db_session, mock_info):
+async def test_service_part_add_part(db_session):
     workcenter = await workcenter_factory(name="Workcenter A", session=db_session)
 
     part_name = "Left Robot Arm"
@@ -37,8 +37,8 @@ async def test_resolver_add_part(db_session, mock_info):
     part = await add_part(
         name=part_name,
         workcenter_id=workcenter.id,
-        info=mock_info,
         lead_time=lead_time,
+        session=db_session,
     )
 
     assert part.id is not None

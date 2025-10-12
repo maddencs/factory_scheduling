@@ -3,15 +3,15 @@ from typing import List
 import strawberry
 from strawberry.types import Info
 
-from src.api.graphql.resolvers.workcenter import all_workcenters
 from src.api.graphql.types.workcenter import (WorkcenterType,
                                               map_workcenter_to_type)
+from src.services.workcenter import all_workcenters
 
 
 @strawberry.type
 class WorkcenterQuery:
     @strawberry.field
     async def all_workcenters(self, info: Info) -> List[WorkcenterType]:
-        workcenters = await all_workcenters(info)
+        workcenters = await all_workcenters(info.context["session"])
         data = [map_workcenter_to_type(workcenter) for workcenter in workcenters]
         return data

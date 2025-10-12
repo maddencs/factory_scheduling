@@ -1,5 +1,6 @@
 import strawberry
 
+from .schemas.part_mutation import PartMutation
 from .schemas.part_query import PartQuery
 
 
@@ -7,5 +8,9 @@ from .schemas.part_query import PartQuery
 class Query(PartQuery):
     pass
 
+@strawberry.type
+class Mutation(PartMutation):
+    pass
 
-schema = strawberry.Schema(query=Query)
+
+schema = strawberry.Schema(mutation=Mutation, query=Query)

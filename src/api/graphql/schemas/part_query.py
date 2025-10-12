@@ -4,7 +4,7 @@ import strawberry
 from strawberry.types import Info
 
 from src.api.graphql.resolvers.part import get_parts
-from src.api.graphql.types.part import PartType, WorkcenterType
+from src.api.graphql.types.part import PartType, map_part_to_type
 
 
 @strawberry.type
@@ -14,14 +14,5 @@ class PartQuery:
         parts = await get_parts(info)
         data = list()
         for part in parts:
-            data.append(
-                PartType(
-                    id=part.id,
-                    name=part.name,
-                    workcenter=WorkcenterType(
-                        id=part.workcenter_id,
-                        name=part.workcenter.name,
-                    ),
-                ),
-            )
+            data.append(map_part_to_type(part))
         return data

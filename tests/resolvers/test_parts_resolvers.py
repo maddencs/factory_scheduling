@@ -1,30 +1,25 @@
 from datetime import timedelta
-from unittest.mock import Mock
 
 import pytest
 
-from src.api.graphql.resolvers.part import get_parts
-from src.models import Part, Workcenter
+from src.api.graphql.resolvers.part import add_part, get_parts
+from src.models import Workcenter
+from tests.factories.part import part_factory
 
 
 @pytest.mark.asyncio
-async def test_resolver_get_parts(db_session):
+async def test_resolver_get_parts(db_session, mock_info):
     workcenter = Workcenter(name="Workcenter A")
     db_session.add(workcenter)
     await db_session.commit()
     await db_session.refresh(workcenter)
 
-    part = Part(
+    part = await part_factory(
+        session=db_session,
         name="Widget A",
         lead_time=timedelta(days=1),
         workcenter_id=workcenter.id,
     )
-    db_session.add(part)
-    await db_session.commit()
-    await db_session.refresh(part)
-
-    mock_info = Mock()
-    mock_info.context = {"session": db_session}
 
     parts = await get_parts(mock_info)
 
@@ -34,3 +29,20 @@ async def test_resolver_get_parts(db_session):
     assert parts[0].lead_time == part.lead_time
     assert parts[0].workcenter.id == workcenter.id
     assert parts[0].workcenter.name == workcenter.name
+
+
+@pytest.mark.asyncio
+async def test_resolver_add_part(db_session, mock_info):
+    workcenter = Workcenter(name="Workcenter A")
+    db_session.add(workcenter)
+    await db_session.commit()
+    await db_session.refresh(workcenter)
+
+    part = await add_part(
+        name="Widget A",
+        workcenter_id=workcenter.id,
+        info=mock_info,
+        lead_time=timedelta(days=1),
+    )
+
+    assert part.id is not None

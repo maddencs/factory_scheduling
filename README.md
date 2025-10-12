@@ -17,7 +17,7 @@ docker-compose run run_migrations
 To run the tests inside the docker testing container:
 
 ```bash
-docker-compose run --rm tests
+docker-compose run tests
 ```
 
 To run the app:

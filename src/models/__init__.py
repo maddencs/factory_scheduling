@@ -4,4 +4,10 @@ from .order import Order
 from .part import Part
 from .workcenter import Workcenter
 
-__all__ = ["BillOfMaterials", "Order", "Part", "Workcenter", "BOMParts"]
+__all__ = [
+    "BillOfMaterials",
+    "Order",
+    "Part",
+    "Workcenter",
+    "BOMParts",
+]

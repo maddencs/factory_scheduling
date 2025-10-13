@@ -1,0 +1,44 @@
+type BillOfMaterialsType {
+  id: Int!
+  name: String!
+}
+
+"""Date with time (isoformat)"""
+scalar DateTime
+
+type Mutation {
+  addPart(name: String!, leadTimeSeconds: Int!, workcenterId: Int!): PartType!
+  submitOrder(billOfMaterialsId: Int!): OrderType!
+}
+
+type OrderType {
+  id: Int!
+  billOfMaterials: BillOfMaterialsType!
+}
+
+type PartType {
+  id: Int!
+  name: String!
+  leadTimeSeconds: Int!
+  workcenter: WorkcenterType!
+}
+
+type Query {
+  allParts: [PartType!]!
+  allWorkcenters: [WorkcenterType!]!
+  allScheduledParts: [ScheduledPartType!]!
+}
+
+type ScheduledPartType {
+  id: Int!
+  name: String!
+  part: PartType!
+  leadTimeSeconds: Int!
+  order: OrderType!
+  scheduledStart: DateTime!
+}
+
+type WorkcenterType {
+  id: Int!
+  name: String!
+}

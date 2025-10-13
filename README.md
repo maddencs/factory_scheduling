@@ -31,6 +31,8 @@ Optionally, seed the database with some test data:
 docker-compose run seed_demo_data
 ```
 
+## GraphQL Schema
+📄 [View the full GraphQL Schema](./schema.graphql)
 
 
 ## ⚙️ Tech Stack

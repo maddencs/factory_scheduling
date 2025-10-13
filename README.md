@@ -31,8 +31,8 @@ Optionally, seed the database with some test data:
 docker-compose run seed_demo_data
 ```
 
-## GraphQL Schema
-📄 [View the full GraphQL Schema](./schema.graphql)
+## 🤖 GraphQL Schema
+ [View the full GraphQL Schema](./schema.graphql)
 
 ## Stretch Goals(other than auth)
 
@@ -44,8 +44,15 @@ docker-compose run seed_demo_data
 - [ ] Async execution with job status and polling/subscriptions
 - [ ] Heuristics or optimizations to minimize idle time and balance load
 
-## Possible edge cases
+## ⚠️ Possible edge cases and limitations
 - Orders with no parts
+- No error handling or retries in scheduling
+- Potential for double booking a workcenter
+
+## 💡 Design Decisions
+- Business logic is decoupled from the API logic
+- Tests are small and focused
+- Docker allows for consistent development and deployment
 
 ## ⚙️ Tech Stack
 - FastAPI

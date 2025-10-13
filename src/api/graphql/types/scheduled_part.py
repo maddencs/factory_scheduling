@@ -1,7 +1,6 @@
 from datetime import datetime
 
 import strawberry
-from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.api.graphql.types.bill_of_materials import BillOfMaterialsType
 from src.api.graphql.types.order import OrderType
@@ -21,10 +20,7 @@ class ScheduledPartType:
     scheduled_start: datetime
 
 
-def map_scheduled_part_to_type(scheduled_part: ScheduledPart, session: AsyncSession) -> ScheduledPartType:
-    session.refresh(scheduled_part, ["part"])
-    session.refresh(scheduled_part.part, ["workcenter"])
-    session.refresh(scheduled_part.order, ["bill_of_materials"])
+def map_scheduled_part_to_type(scheduled_part: ScheduledPart) -> ScheduledPartType:
     return ScheduledPartType(
         id=scheduled_part.id,
         name=scheduled_part.part.name,

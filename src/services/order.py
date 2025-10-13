@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.services.order_scheduling import OrderScheduler
 from src.models import Order
+from src.services.order_scheduling import OrderScheduler
 
 
 async def submit_order(

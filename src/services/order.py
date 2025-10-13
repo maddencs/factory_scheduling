@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.models import Order
-from src.services.order_scheduling import OrderScheduler
+from src.services.order_scheduling import OrderScheduleRunner
 
 
 async def submit_order(
@@ -15,6 +15,6 @@ async def submit_order(
     await session.commit()
     await session.refresh(order)
 
-    await OrderScheduler().schedule(order, session)
+    await OrderScheduleRunner(session).run(order)
 
     return order

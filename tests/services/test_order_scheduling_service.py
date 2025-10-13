@@ -1,10 +1,11 @@
 from datetime import timedelta
+from unittest import mock
 
 import pytest
 from sqlalchemy import select
 
 from src.models import ScheduledPart
-from src.services.order_scheduling import OrderScheduler
+from src.services.order_scheduling import OrderScheduler, OrderScheduleRunner
 from tests.factories.bill_of_materials import bom_factory
 from tests.factories.bom_part import bom_part_factory
 from tests.factories.order import order_factory
@@ -156,3 +157,15 @@ async def test_order_service_schedule_parts__multi_workcenter(db_session):
     assert cranium_scheduled_part.scheduled_start == (
         torso_scheduled_part.scheduled_start + torso_lead_time - cranium_lead_time
     )
+
+
+@pytest.mark.asyncio
+async def test_order_scheduling_runner_calls_scheduler(db_session):
+    mock_scheduler = mock.AsyncMock()
+    runner = OrderScheduleRunner(db_session)
+    runner.scheduler = mock_scheduler
+
+    fake_order = mock.AsyncMock()
+    await runner.run(fake_order)
+
+    mock_scheduler.schedule.assert_awaited_once_with(fake_order, db_session)

@@ -9,6 +9,20 @@ from sqlalchemy.orm import selectinload
 from src.models import Order, Part, ScheduledPart
 
 
+class OrderScheduleRunner:
+    """Order scheduling runner to make it easy to implement asynchronous scheduling later"""
+
+    def __init__(self, session: AsyncSession):
+        self.session = session
+        self.scheduler = OrderScheduler()
+
+    async def run(self, order: Order):
+        await self.scheduler.schedule(order, self.session)
+
+    def run_async(self, order: Order):
+        raise NotImplementedError("Asynchronous scheduling is not yet implemented.")
+
+
 class OrderScheduler:
     async def schedule(self, order: Order, session: AsyncSession):
         await session.refresh(order, ["bill_of_materials"])

@@ -1,7 +1,3 @@
-import asyncio
-from unittest.mock import Mock
-
-import pytest
 import pytest_asyncio
 from httpx import ASGITransport, AsyncClient
 from sqlalchemy import text
@@ -20,15 +16,9 @@ async def db_session():
     async with TestSessionLocal() as session:
         yield session
 
-        # Disable FK checks so truncation order doesn't matter
-        await session.execute(text("SET session_replication_role = replica;"))
-
-        # Truncate all tables and reset sequences
         for table in reversed(Base.metadata.sorted_tables):
-            await session.execute(text(f'TRUNCATE TABLE "{table.name}" RESTART IDENTITY CASCADE;'))
+            await session.execute(text(f'TRUNCATE TABLE "{table.name}" CASCADE;'))
 
-        # Re-enable FK constraints
-        await session.execute(text("SET session_replication_role = DEFAULT;"))
         await session.commit()
 
 
@@ -41,18 +31,3 @@ async def test_client(db_session: AsyncSession):
 
         app.dependency_overrides[get_async_session] = override_get_session
         yield client
-
-
-@pytest.fixture(scope="session")
-async def event_loop():
-    policy = asyncio.get_event_loop_policy()
-    loop = policy.new_event_loop()
-    yield loop
-    loop.close()
-
-
-@pytest_asyncio.fixture
-async def mock_info(db_session: AsyncSession):
-    mock_info = Mock()
-    mock_info.context = {"session": db_session}
-    yield mock_info

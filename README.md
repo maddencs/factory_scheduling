@@ -1,4 +1,4 @@
-# Factory Scheduler
+# 🏭 Factory Scheduler
 This is a simple app to schedule work orders and part production.
 
 
@@ -6,7 +6,7 @@ This is a simple app to schedule work orders and part production.
 Copy the files to your local machine and build the docker images with the following commands:
 ```bash
 git clone git@github.com:maddencs/factory_scheduling.git
-docker-compose build --no-cache
+docker-compose build
 ```
 
 Run database migrations with:
@@ -34,6 +34,15 @@ docker-compose run seed_demo_data
 ## GraphQL Schema
 📄 [View the full GraphQL Schema](./schema.graphql)
 
+## Stretch Goals(other than auth)
+
+- [ ] Rescheduling when a part is delayed to restore synchronization
+- [ ] Pipelined or batch processing per workcenter
+- [X] Multi‑order planning and interference avoidance
+- [ ] Slack/tolerance parameters for the scheduler (for example ±5%)
+- [ ] Visualization or simple Gantt output
+- [ ] Async execution with job status and polling/subscriptions
+- [ ] Heuristics or optimizations to minimize idle time and balance load
 
 ## ⚙️ Tech Stack
 - FastAPI

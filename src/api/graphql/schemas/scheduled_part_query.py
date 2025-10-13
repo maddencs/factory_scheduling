@@ -3,7 +3,8 @@ from typing import List
 import strawberry
 from strawberry.types import Info
 
-from src.api.graphql.types.scheduled_part import ScheduledPartType, map_scheduled_part_to_type
+from src.api.graphql.types.scheduled_part import (ScheduledPartType,
+                                                  map_scheduled_part_to_type)
 from src.services.scheduled_parts import all_scheduled_parts
 
 

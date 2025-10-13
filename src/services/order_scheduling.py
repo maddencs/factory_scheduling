@@ -6,8 +6,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
-from models import Part, ScheduledPart
-from src.models import Order
+from src.models import Order, Part, ScheduledPart
 
 
 class OrderScheduler:

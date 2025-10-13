@@ -14,6 +14,7 @@ def map_order_to_type(order: Order) -> OrderType:
     return OrderType(
         id=order.id,
         bill_of_materials=BillOfMaterialsType(
-            id=order.bill_of_materials_id,
+            id=order.bill_of_materials.id,
+            name=order.bill_of_materials.name,
         ),
     )

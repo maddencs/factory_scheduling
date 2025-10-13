@@ -3,8 +3,8 @@ from datetime import timedelta
 import pytest
 from sqlalchemy import select
 
-from models import ScheduledPart
-from services.order_scheduling import OrderScheduler
+from src.models import ScheduledPart
+from src.services.order_scheduling import OrderScheduler
 from tests.factories.bill_of_materials import bom_factory
 from tests.factories.bom_part import bom_part_factory
 from tests.factories.order import order_factory

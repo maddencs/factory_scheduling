@@ -3,8 +3,7 @@ from typing import List
 import strawberry
 from strawberry.types import Info
 
-from src.api.graphql.types.workcenter import (WorkcenterType,
-                                              map_workcenter_to_type)
+from src.api.graphql.types.workcenter import WorkcenterType, map_workcenter_to_type
 from src.services.workcenter import all_workcenters
 
 

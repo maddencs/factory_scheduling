@@ -12,9 +12,9 @@ from src.models import Order, Part, ScheduledPart
 class OrderScheduleRunner:
     """Order scheduling runner to make it easy to implement asynchronous scheduling later"""
 
-    def __init__(self, session: AsyncSession):
+    def __init__(self, scheduler: "OrderScheduler", session: AsyncSession):
         self.session = session
-        self.scheduler = OrderScheduler()
+        self.scheduler = scheduler
 
     async def run(self, order: Order):
         await self.scheduler.schedule(order, self.session)

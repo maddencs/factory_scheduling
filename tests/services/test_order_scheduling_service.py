@@ -162,8 +162,7 @@ async def test_order_service_schedule_parts__multi_workcenter(db_session):
 @pytest.mark.asyncio
 async def test_order_scheduling_runner_calls_scheduler(db_session):
     mock_scheduler = mock.AsyncMock()
-    runner = OrderScheduleRunner(db_session)
-    runner.scheduler = mock_scheduler
+    runner = OrderScheduleRunner(mock_scheduler, db_session)
 
     fake_order = mock.AsyncMock()
     await runner.run(fake_order)

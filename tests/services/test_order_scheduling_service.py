@@ -169,3 +169,45 @@ async def test_order_scheduling_runner_calls_scheduler(db_session):
     await runner.run(fake_order)
 
     mock_scheduler.schedule.assert_awaited_once_with(fake_order, db_session)
+
+
+@pytest.mark.asyncio
+async def test_order_service_schedule_parts_multiple_of_same_part(db_session):
+    """
+    Schedule parts for a workcenter that doesn't have any active scheduled parts
+    """
+    workcenter = await workcenter_factory(
+        session=db_session,
+        name="Robot Workcenter",
+    )
+    bom = await bom_factory(
+        session=db_session,
+        name="Robot",
+    )
+    lead_time = timedelta(days=1)
+    part = await part_factory(
+        name="Left Arm",
+        lead_time=lead_time,
+        workcenter_id=workcenter.id,
+        session=db_session,
+    )
+    await bom_part_factory(
+        part_id=part.id,
+        bill_of_materials_id=bom.id,
+        quantity=2,
+        session=db_session,
+    )
+
+    order = await order_factory(bill_of_materials_id=bom.id, session=db_session)
+
+    await OrderScheduler().schedule(order, db_session)
+
+    result = await db_session.execute(select(ScheduledPart).order_by(ScheduledPart.scheduled_start.asc()))
+    scheduled_parts = result.scalars().all()
+
+    assert scheduled_parts[0].part_id == part.id
+    assert scheduled_parts[0].order_id == order.id
+    assert scheduled_parts[0].scheduled_start == scheduled_parts[1].scheduled_start - lead_time
+
+    assert scheduled_parts[1].part_id == part.id
+    assert scheduled_parts[1].order_id == order.id

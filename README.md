@@ -44,6 +44,9 @@ docker-compose run seed_demo_data
 - [ ] Async execution with job status and polling/subscriptions
 - [ ] Heuristics or optimizations to minimize idle time and balance load
 
+## Possible edge cases
+- Orders with no parts
+
 ## ⚙️ Tech Stack
 - FastAPI
 - SQLAlchemy

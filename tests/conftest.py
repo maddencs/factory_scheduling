@@ -1,8 +1,11 @@
+import pytest
 import pytest_asyncio
 from httpx import ASGITransport, AsyncClient
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
+from alembic import command
+from alembic.config import Config
 from src.api.main import app
 from src.database import DATABASE_ASYNC_URL, get_async_session
 from src.models.base import Base
@@ -31,3 +34,9 @@ async def test_client(db_session: AsyncSession):
 
         app.dependency_overrides[get_async_session] = override_get_session
         yield client
+
+
+@pytest.fixture(scope="session", autouse=True)
+def run_migrations():
+    alembic_cfg = Config("alembic.ini")
+    command.upgrade(alembic_cfg, "head")

@@ -19,6 +19,7 @@ jobs:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: db_test
+      POSTGRES_HOST: localhost
     docker:
       - image: cimg/python:3.13
       - image: cimg/postgres:16.10

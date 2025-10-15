@@ -46,7 +46,7 @@ resource "docker_image" "app" {
 }
 
 resource "docker_container" "app" {
-  name  = "your_app"
+  name  = "factory_scheduling_app"
   image = docker_image.app.name
   ports {
     internal = 8000

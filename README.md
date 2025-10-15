@@ -60,10 +60,11 @@ Access the GraphQL playground at http://localhost:8000/graphql/
 - Docker allows for consistent development and deployment
 
 ## ⚙️ Tech Stack
-- FastAPI
-- SQLAlchemy
-- GraphQL
-- PostgreSQL
-- pytest
-- alembic
-- Docker
+- FastAPI - Lightweight API framework for REST and async API's
+- SQLAlchemy - Database ORM
+- GraphQL - API query language(using `strawberry`)
+- PostgreSQL - Relational database for persistence layer
+- pytest - Python testing framework
+- alembic - For database migrations
+- Docker - Containerization for consistent deployment/development environments
+- Terraform - Infrastructure as Code(IaC) for provisioning infrastructure

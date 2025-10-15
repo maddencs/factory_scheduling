@@ -17,10 +17,26 @@ jobs:
   build-and-test:
     docker:
       - image: cimg/python:3.13
+      - image: cimg/postgres:16
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: db_test
     steps:
       - checkout
       - python/install-packages:
           pkg-manager: pip
+      - run:
+          name: Wait for Postgres
+          command: |
+            for i in `seq 1 10`; do
+              nc -z localhost 5432 && echo "Postgres is up" && break
+              echo "Waiting for Postgres..."
+              sleep 2
+            done
+      - run:
+          name: Run Alembic Migrations
+          command: alembic upgrade head
       - run:
           name: Run tests
           command: pytest

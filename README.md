@@ -3,7 +3,17 @@ This is a simple app to schedule work orders and part production.
 
 
 ## 🚀 Getting Started
-Initial setup
+### Terraform Instructions
+1. Install Terraform
+2. Run the following commands
+```bash
+    terraform init  # Initialize terraform
+    terraform plan  # Optional to review terraform plant
+    terraform apply  # apply the plan and spin up the services. Accept with "yes" when prompted
+```
+Access the app at http://localhost:8000/graphql
+
+### Docker Instructions
 ```bash
 git clone git@github.com:maddencs/factory_scheduling.git # Clone the repo
 cd factory_scheduling # Navigate to the project directory

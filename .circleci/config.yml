@@ -15,15 +15,19 @@ orbs:
 # See: https://circleci.com/docs/guides/orchestrate/jobs-steps/#jobs-overview & https://circleci.com/docs/reference/configuration-reference/#jobs
 jobs:
   build-and-test:
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: db_test
+      POSTGRES_HOST: localhost
     docker:
       - image: cimg/python:3.13
-        environment:
-          DATABASE_URL: postgres://postgres:postgres@localhost:5432/db_test
       - image: cimg/postgres:16.10
         environment:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: db_test
+          POSTGRES_HOST: localhost
     steps:
       - checkout
       - python/install-packages:

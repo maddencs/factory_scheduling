@@ -60,6 +60,7 @@ Access the GraphQL playground at http://localhost:8000/graphql/
 - Docker allows for consistent development and deployment
 
 ## ⚙️ Tech Stack
+- Python - version 3.13.7
 - FastAPI - Lightweight API framework for REST and async API's
 - SQLAlchemy - Database ORM
 - GraphQL - API query language(using `strawberry`)
@@ -68,4 +69,4 @@ Access the GraphQL playground at http://localhost:8000/graphql/
 - alembic - For database migrations
 - Docker - Containerization for consistent deployment/development environments
 - Terraform - Infrastructure as Code(IaC) for provisioning infrastructure
-- CircleCI - CI/CD. CircleCI – CI/CD setup to run tests on every commit, with deployments on the roadmap (because why not)
+- CircleCI - CI/CD setup to run tests on every commit, with deployments on the roadmap (because why not)
